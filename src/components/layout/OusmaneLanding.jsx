@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FaArrowRight, FaCode, FaRocket, FaPaintBrush } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import TechTunnel from './TechTunnel';
+import CircularGallery from '../animations/CircularGallery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -237,8 +237,19 @@ const OusmaneLanding = () => {
                     </div>
                 </section>
 
-                {/* --- TECH TUNNEL SECTION --- */}
-                <TechTunnel />
+                {/* --- TECH TUNNEL SECTION (Replaced by Circular Gallery) --- */}
+                <section className="h-screen w-full overflow-hidden bg-[#110a14] relative z-30">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none gap-8">
+                        <h2 className="text-6xl md:text-9xl font-black text-white/10 uppercase tracking-tighter text-center">
+                            Kiroku
+                        </h2>
+                        <img src="/Kiroku.svg" alt="Kiroku Logo" className="w-24 h-24 md:w-80 md:h-80 opacity-10" />
+                    </div>
+
+                    <div className="relative z-20 w-full h-full">
+                        <CircularGallery />
+                    </div>
+                </section>
 
                 {/* --- FOOTER --- */}
                 <footer className="h-screen flex flex-col justify-between py-12 px-6 bg-[#F970A2] text-[#1a0f1f]">
