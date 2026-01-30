@@ -110,8 +110,23 @@ const OusmaneLanding = () => {
     return (
         <div ref={componentRef} className="bg-[#1a0f1f] text-[#fce4d6] min-h-screen font-sans selection:bg-[#F970A2] selection:text-white">
 
-            {/* --- HERO SECTION --- */}
             <section className="min-h-screen flex flex-col justify-center px-6 relative overflow-hidden">
+                <div className="absolute top-0 right-0 h-[65%] w-full md:w-[40%] z-0 pointer-events-none">
+                    <video
+                        src="/VideoPulpo.mp4"
+                        autoPlay
+                        muted
+                        playsInline
+                        className="w-full h-full object-cover mask-image-gradient-b"
+                    />
+                    {/* Color tint overlay to match background */}
+                    <div className="absolute inset-0 bg-[#1a0f1f] mix-blend-color opacity-50"></div>
+                    {/* Darken overlay to merge brightness */}
+                    <div className="absolute inset-0 bg-[#1a0f1f] mix-blend-multiply opacity-80"></div>
+
+                    <div className="absolute inset-0 bg-gradient-to-l from-transparent via-[#1a0f1f]/20 to-[#1a0f1f]"></div>
+                    <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#1a0f1f] to-transparent"></div>
+                </div>
                 <div className="container mx-auto z-10">
                     <p className="hero-sub text-[#F970A2] font-bold tracking-[0.2em] mb-4 uppercase text-sm md:text-base">Estudio Digital</p>
                     <h1 className="text-[18vw] md:text-[12vw] leading-[0.85] font-black uppercase tracking-tighter mix-blend-difference text-white">
