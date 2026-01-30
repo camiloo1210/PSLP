@@ -113,7 +113,7 @@ const OusmaneLanding = () => {
             <section className="min-h-screen flex flex-col justify-center px-6 relative overflow-hidden">
                 <div className="absolute top-0 right-0 h-[65%] w-full md:w-[40%] z-0 pointer-events-none">
                     <video
-                        src="/VideoPulpo.mp4"
+                        src="video/VideoPulpo.mp4"
                         poster="/poster.png"
                         autoPlay
                         muted
