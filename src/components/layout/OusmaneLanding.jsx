@@ -2,11 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FaArrowRight, FaCode, FaRocket, FaPaintBrush } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import TechTunnel from './TechTunnel';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const OusmaneLanding = () => {
+    const navigate = useNavigate();
     const componentRef = useRef(null);
     const sliderRef = useRef(null);
     const triggerRef = useRef(null);
@@ -77,10 +79,9 @@ const OusmaneLanding = () => {
     }, []);
 
     const projects = [
-        { id: "01", title: "HealthConnect", cat: "Healthcare", img: "bg-gradient-to-br from-pink-500 to-rose-900" },
-        { id: "02", title: "EcoMart", cat: "E-Commerce", img: "bg-gradient-to-br from-emerald-500 to-teal-900" },
-        { id: "03", title: "EduPlatform", cat: "EdTech", img: "bg-gradient-to-br from-violet-500 to-purple-900" },
-        { id: "04", title: "AgroTech", cat: "Innovation", img: "bg-gradient-to-br from-amber-500 to-orange-900" },
+        { id: "01", title: "Fiado", cat: "Fintech / SaaS", img: "bg-gradient-to-br from-blue-600 to-indigo-900", link: "/fiado", logo: "/fiado.svg" },
+        { id: "02", title: "Glu", cat: "Speech AI / Real-time", img: "bg-gradient-to-br from-cyan-600 to-slate-900", link: "/glu", logo: "/glu.svg" },
+        { id: "03", title: "Ema", cat: "HealthTech / Medical", img: "bg-gradient-to-br from-emerald-500 to-teal-900", link: "/ema", logo: "/ema.svg" },
     ];
 
     return (
@@ -178,12 +179,17 @@ const OusmaneLanding = () => {
                             <div key={index} className="reveal-text group md:flex items-center gap-12">
                                 <span className="hidden md:block text-xl font-mono opacity-50">({project.id})</span>
                                 <div className="flex-1">
-                                    <h3 className="text-5xl md:text-8xl font-bold hover:text-[#F970A2] transition-colors cursor-pointer uppercase">
+                                    <h3
+                                        onClick={() => project.link && navigate(project.link)}
+                                        className="text-5xl md:text-8xl font-bold hover:text-[#F970A2] transition-colors cursor-pointer uppercase"
+                                    >
                                         {project.title}
                                     </h3>
                                     <p className="text-xl mt-4 opacity-60 uppercase tracking-widest">{project.cat}</p>
                                 </div>
-                                <div className={`w-full md:w-1/3 aspect-[4/3] ${project.img} rounded-lg opacity-80 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-105`}></div>
+                                <div className={`w-full md:w-1/3 aspect-[4/3] ${project.img} rounded-lg opacity-80 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-105 flex items-center justify-center p-8`}>
+                                    {project.logo && <img src={project.logo} alt={`${project.title} logo`} className="w-full h-full object-contain drop-shadow-2xl" />}
+                                </div>
                             </div>
                         ))}
                     </div>
