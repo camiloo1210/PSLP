@@ -75,7 +75,7 @@ const TechTunnel = () => {
                 {
                     opacity: 0, // Start invisible
                     scale: 1, // Start larger (was 0)
-                    z: -5000, 
+                    z: -5000,
                     x: (i) => (i % 2 === 0 ? 1 : -1) * (window.innerWidth * 0.2), // Alternate Right/Left
                     y: 0, // Keep them vertically centered
                 },
@@ -133,9 +133,9 @@ const TechTunnel = () => {
                         key={idx}
                         className="tech-item absolute flex flex-col items-center justify-center"
                     >
-                        <div className="flex flex-col items-center gap-4 bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 hover:bg-white/10 hover:scale-110 group cursor-pointer">
-                            <item.Icon size={80} color={item.color} className="drop-shadow-2xl transition-transform duration-300 group-hover:rotate-12" />
-                            <span className="text-xl font-bold text-white tracking-wide whitespace-nowrap drop-shadow-md">{item.name}</span>
+                        <div className="flex flex-col items-center gap-4 bg-white/5 backdrop-blur-md p-4 md:p-6 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 hover:bg-white/10 hover:scale-110 group cursor-pointer">
+                            <item.Icon className="w-12 h-12 md:w-20 md:h-20 drop-shadow-2xl transition-transform duration-300 group-hover:rotate-12" color={item.color} />
+                            <span className="text-sm md:text-xl font-bold text-white tracking-wide whitespace-nowrap drop-shadow-md">{item.name}</span>
                         </div>
                     </div>
                 ))}
