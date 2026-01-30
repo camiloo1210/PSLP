@@ -114,6 +114,7 @@ const OusmaneLanding = () => {
                 <div className="absolute top-0 right-0 h-[65%] w-full md:w-[40%] z-0 pointer-events-none">
                     <video
                         src="/VideoPulpo.mp4"
+                        poster="/poster.png"
                         autoPlay
                         muted
                         playsInline
