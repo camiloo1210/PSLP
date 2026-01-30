@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div className="font-sans antialiased bg-[#1a0f1f] min-h-screen flex flex-col relative">
-      <SakuraBackground />
+      {/* <SakuraBackground /> */}
       <OusmaneLanding />
     </div>
   );

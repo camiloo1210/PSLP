@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FaArrowRight, FaCode, FaRocket, FaPaintBrush } from 'react-icons/fa';
+import TechTunnel from './TechTunnel';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -39,7 +40,8 @@ const OusmaneLanding = () => {
                     pin: true,
                     scrub: 1,
                     snap: 1 / (panels.length - 1),
-                    end: () => "+=" + sliderRef.current.offsetWidth
+                    end: () => "+=" + sliderRef.current.offsetWidth,
+                    refreshPriority: 1 // FIX: Ensure this pin is calculated BEFORE TechTunnel
                 }
             });
 
@@ -105,7 +107,7 @@ const OusmaneLanding = () => {
             </section>
 
             {/* --- HORIZONTAL SCROLL SECTION --- */}
-            <section ref={triggerRef} className="overflow-hidden h-screen flex flex-col justify-center bg-white text-[#1a0f1f]">
+            <section ref={triggerRef} className="overflow-hidden h-screen flex flex-col justify-center bg-white text-[#1a0f1f] relative z-20">
                 <div ref={sliderRef} className="flex h-full w-[400vw]">
 
                     {/* Panel 1: Intro */}
@@ -193,6 +195,9 @@ const OusmaneLanding = () => {
                     </div>
                 </div>
             </section>
+
+            {/* --- TECH TUNNEL SECTION --- */}
+            <TechTunnel />
 
             {/* --- FOOTER --- */}
             <footer className="h-screen flex flex-col justify-between py-12 px-6 bg-[#F970A2] text-[#1a0f1f]">
