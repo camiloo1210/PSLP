@@ -63,8 +63,8 @@ const Projects = () => {
         <section id="projects" ref={sectionRef} className="py-24 bg-white relative">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-24">
-                    <span className="text-pastel-coral font-bold tracking-wider uppercase mb-2 block">Portafolio</span>
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-800">Proyectos Destacados</h2>
+                    <span className="text-kiroku-primary font-bold tracking-wider uppercase mb-2 block">Portafolio</span>
+                    <h2 className="text-4xl md:text-5xl font-bold text-kiroku-contrast">Proyectos Destacados</h2>
                 </div>
 
                 <div ref={containerRef} className="space-y-32">
@@ -93,24 +93,24 @@ const Projects = () => {
                                     <span className={cn("p-3 rounded-xl text-white bg-gradient-to-r", project.color)}>
                                         {project.icon}
                                     </span>
-                                    <span className="text-gray-500 font-semibold uppercase tracking-wide text-sm">
+                                    <span className="text-kiroku-contrast/50 font-semibold uppercase tracking-wide text-sm">
                                         {project.category}
                                     </span>
                                 </div>
 
-                                <h3 className="text-4xl font-bold text-gray-800">{project.title}</h3>
+                                <h3 className="text-4xl font-bold text-kiroku-contrast">{project.title}</h3>
 
-                                <p className="text-xl text-gray-600 leading-relaxed">
+                                <p className="text-xl text-kiroku-contrast/70 leading-relaxed">
                                     {project.desc}
                                 </p>
 
-                                <div className="flex items-center gap-2 text-gray-500 font-medium bg-white/50 inline-block px-4 py-2 rounded-lg">
+                                <div className="flex items-center gap-2 text-kiroku-contrast/60 font-medium bg-white/50 inline-block px-4 py-2 rounded-lg">
                                     👥 {project.stats}
                                 </div>
 
                                 <div className="flex flex-wrap gap-2 pt-4">
                                     {project.tags.map((tag, tIdx) => (
-                                        <span key={tIdx} className="px-4 py-2 bg-white rounded-full text-sm font-semibold text-gray-600 shadow-sm border border-gray-100">
+                                        <span key={tIdx} className="px-4 py-2 bg-white rounded-full text-sm font-semibold text-kiroku-contrast/70 shadow-sm border border-kiroku-background">
                                             {tag}
                                         </span>
                                     ))}

@@ -9,10 +9,11 @@ import TechStack from './components/sections/TechStack';
 import Process from './components/sections/Process';
 import Team from './components/sections/Team';
 import WhyUs from './components/sections/WhyUs';
-// import CTA as a component if needed, but Footer already has the main CTA.
 // We'll keep it for structure.
 import CTA from './components/sections/CTA';
 import { initGSAP } from './animations/gsapConfig';
+import SakuraBackground from './components/effects/SakuraBackground';
+import OusmaneLanding from './components/layout/OusmaneLanding';
 
 function App() {
   console.log('App component rendering...');
@@ -21,20 +22,9 @@ function App() {
   }, []);
 
   return (
-    <div className="font-sans antialiased text-gray-800 bg-pastel-cream min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-grow">
-        <Hero />
-        <About />
-        <Services />
-        <Projects />
-        <TechStack />
-        <Process />
-        <Team />
-        <WhyUs />
-        <CTA />
-      </main>
-      <Footer />
+    <div className="font-sans antialiased bg-[#1a0f1f] min-h-screen flex flex-col relative">
+      <SakuraBackground />
+      <OusmaneLanding />
     </div>
   );
 }

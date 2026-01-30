@@ -6,15 +6,13 @@ export default {
     theme: {
         extend: {
             colors: {
-                pastel: {
-                    peach: '#FFB5A7',
-                    coral: '#FF9A76',
-                    lavender: '#E6D5F5',
-                    mint: '#C8E6C9',
-                    blue: '#B3D9E8',
-                    cream: '#FEF7F0',
-                    pink: '#FFD1DC',
-                    yellow: '#FFD700'
+                kiroku: {
+                    primary: '#F970A2',   // Cherry Blossom
+                    secondary: '#B65691', // Evening Sky
+                    action: '#DDA15E',    // Sun Gold
+                    contrast: '#2D1B33',  // Deep Trunk
+                    background: '#FCE4D6',// Soft Horizon
+                    accent: '#7A4495',    // Twilight Purple
                 }
             },
             fontFamily: {

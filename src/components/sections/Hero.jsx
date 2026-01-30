@@ -19,30 +19,30 @@ const Hero = () => {
         <section
             id="hero"
             ref={heroRef}
-            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-pastel-cream via-white to-pastel-lavender bg-[length:400%_400%] animate-gradient-xy"
+            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-kiroku-background via-white to-kiroku-secondary/20 bg-[length:400%_400%] animate-gradient-xy"
         >
             {/* Floating Shapes Background */}
             <div ref={shapesRef} className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-                <div className="absolute top-[15%] left-[10%] w-64 h-64 bg-pastel-peach rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob"></div>
-                <div className="absolute top-[20%] right-[10%] w-72 h-72 bg-pastel-mint rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-2000"></div>
-                <div className="absolute bottom-[20%] left-[20%] w-80 h-80 bg-pastel-blue rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-4000"></div>
-                <div className="absolute bottom-[10%] right-[20%] w-60 h-60 bg-pastel-pink rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob"></div>
+                <div className="absolute top-[15%] left-[10%] w-64 h-64 bg-kiroku-primary rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob"></div>
+                <div className="absolute top-[20%] right-[10%] w-72 h-72 bg-kiroku-secondary rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-2000"></div>
+                <div className="absolute bottom-[20%] left-[20%] w-80 h-80 bg-kiroku-accent rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-4000"></div>
+                <div className="absolute bottom-[10%] right-[20%] w-60 h-60 bg-kiroku-action rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob"></div>
             </div>
 
             <div className="container mx-auto px-6 relative z-10 text-center">
                 <h1
                     ref={titleRef}
-                    className="text-5xl md:text-7xl font-bold text-gray-800 mb-6 leading-tight tracking-tight"
+                    className="text-5xl md:text-7xl font-bold text-kiroku-contrast mb-6 leading-tight tracking-tight"
                 >
                     Soluciones Innovadoras <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-pastel-coral to-pastel-blue">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-kiroku-primary to-kiroku-accent">
                         para un Mañana Mejor
                     </span>
                 </h1>
 
                 <p
                     ref={subRef}
-                    className="text-xl md:text-2xl text-gray-600 mb-10 max-w-2xl mx-auto"
+                    className="text-xl md:text-2xl text-kiroku-contrast/80 mb-10 max-w-2xl mx-auto"
                 >
                     Construimos tecnología que transforma ideas en realidad. Especialistas en desarrollo a medida desde Ecuador para el mundo.
                 </p>
@@ -53,14 +53,14 @@ const Hero = () => {
                 >
                     <a
                         href="#contact"
-                        className="px-8 py-4 bg-gray-900 text-white rounded-full font-bold text-lg hover:bg-gray-800 transition-all hover:scale-105 shadow-xl flex items-center gap-2 group"
+                        className="px-8 py-4 bg-kiroku-action text-white rounded-full font-bold text-lg hover:bg-kiroku-action/90 transition-all hover:scale-105 shadow-xl flex items-center gap-2 group"
                     >
                         Conversemos sobre tu proyecto
                         <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
                     </a>
                     <a
                         href="#projects"
-                        className="px-8 py-4 bg-white/50 backdrop-blur-sm border border-white/50 text-gray-800 rounded-full font-bold text-lg hover:bg-white transition-all hover:scale-105 shadow-lg"
+                        className="px-8 py-4 bg-white/50 backdrop-blur-sm border border-kiroku-contrast/10 text-kiroku-contrast rounded-full font-bold text-lg hover:bg-white transition-all hover:scale-105 shadow-lg"
                     >
                         Ver nuestros proyectos
                     </a>

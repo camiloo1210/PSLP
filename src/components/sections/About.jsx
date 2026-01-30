@@ -71,39 +71,39 @@ const About = () => {
             className="min-h-screen flex items-center justify-center bg-white py-20 relative overflow-hidden"
         >
             {/* Decorative Background Elements */}
-            <div className="absolute top-0 right-0 w-1/3 h-full bg-pastel-cream/30 -skew-x-12 transform translate-x-20"></div>
+            <div className="absolute top-0 right-0 w-1/3 h-full bg-kiroku-accent/10 -skew-x-12 transform translate-x-20"></div>
 
             <div className="container mx-auto px-6 relative z-10">
                 <div ref={contentRef} className="max-w-4xl mx-auto text-center">
-                    <span className="inline-block py-1 px-3 rounded-full bg-pastel-lavender/30 text-purple-600 text-sm font-bold mb-4 tracking-wider uppercase">
+                    <span className="inline-block py-1 px-3 rounded-full bg-kiroku-accent/10 text-kiroku-accent text-sm font-bold mb-4 tracking-wider uppercase">
                         ¿Quiénes Somos?
                     </span>
 
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-8 leading-tight">
+                    <h2 className="text-4xl md:text-5xl font-bold text-kiroku-contrast mb-8 leading-tight">
                         Innovación tecnológica con <br />
-                        <span className="text-pastel-coral relative inline-block">
+                        <span className="text-kiroku-primary relative inline-block">
                             sabor ecuatoriano 🇪🇨
-                            <svg className="absolute w-full h-3 -bottom-1 left-0 text-pastel-yellow opacity-60" viewBox="0 0 100 10" preserveAspectRatio="none">
+                            <svg className="absolute w-full h-3 -bottom-1 left-0 text-kiroku-action opacity-60" viewBox="0 0 100 10" preserveAspectRatio="none">
                                 <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="3" fill="none" />
                             </svg>
                         </span>
                     </h2>
 
-                    <p className="text-xl text-gray-600 mb-16 leading-relaxed">
-                        Somos Platanito Solutions, una empresa de desarrollo de software nacida en el corazón de Ecuador.
+                    <p className="text-xl text-kiroku-contrast/80 mb-16 leading-relaxed">
+                        Somos Kiroku, una empresa de desarrollo de software nacida en el corazón de Ecuador.
                         Nos dedicamos a transformar negocios a través de soluciones digitales personalizadas,
                         combinando creatividad, tecnología de punta y un profundo entendimiento de las necesidades locales y globales.
                     </p>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {stats.map((stat, idx) => (
-                            <div key={idx} className="bg-white p-8 rounded-2xl shadow-xl border border-gray-50 hover:-translate-y-2 transition-transform duration-300">
-                                <div className="text-4xl text-pastel-coral mb-4 flex justify-center">{stat.icon}</div>
-                                <div className="text-4xl font-bold text-gray-800 mb-2 flex justify-center items-baseline">
+                            <div key={idx} className="bg-white p-8 rounded-2xl shadow-xl border border-kiroku-background hover:-translate-y-2 transition-transform duration-300">
+                                <div className="text-4xl text-kiroku-primary mb-4 flex justify-center">{stat.icon}</div>
+                                <div className="text-4xl font-bold text-kiroku-contrast mb-2 flex justify-center items-baseline">
                                     <span ref={addToRefs} data-target={stat.value}>0</span>
                                     <span>{stat.suffix}</span>
                                 </div>
-                                <p className="text-gray-500 font-medium">{stat.label}</p>
+                                <p className="text-kiroku-contrast/60 font-medium">{stat.label}</p>
                             </div>
                         ))}
                     </div>

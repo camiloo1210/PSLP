@@ -33,10 +33,10 @@ const WhyUs = () => {
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {reasons.map((item, idx) => (
-                        <div key={idx} className="why-card p-8 rounded-3xl bg-pastel-cream/30 hover:bg-pastel-cream transition-colors duration-300 border border-transparent hover:border-pastel-peach/50">
-                            <div className="text-4xl text-pastel-coral mb-6">{item.icon}</div>
-                            <h3 className="text-xl font-bold text-gray-800 mb-3">{item.title}</h3>
-                            <p className="text-gray-600 leading-relaxed text-sm">{item.desc}</p>
+                        <div key={idx} className="why-card p-8 rounded-3xl bg-kiroku-background/30 hover:bg-kiroku-background transition-colors duration-300 border border-transparent hover:border-kiroku-primary/50">
+                            <div className="text-4xl text-kiroku-primary mb-6">{item.icon}</div>
+                            <h3 className="text-xl font-bold text-kiroku-contrast mb-3">{item.title}</h3>
+                            <p className="text-kiroku-contrast/70 leading-relaxed text-sm">{item.desc}</p>
                         </div>
                     ))}
                 </div>

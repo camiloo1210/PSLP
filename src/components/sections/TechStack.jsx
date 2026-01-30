@@ -39,7 +39,7 @@ const TechStack = () => {
                 { icon: <SiAngular />, name: "Angular" },
                 { icon: <SiTailwindcss />, name: "Tailwind" }
             ],
-            color: "text-blue-500 bg-blue-50"
+            color: "text-kiroku-primary bg-kiroku-primary/10"
         },
         {
             title: "Backend",
@@ -52,7 +52,7 @@ const TechStack = () => {
                 { icon: <SiMongodb />, name: "MongoDB" },
                 { icon: <SiRedis />, name: "Redis" }
             ],
-            color: "text-green-600 bg-green-50"
+            color: "text-kiroku-secondary bg-kiroku-secondary/10"
         },
         {
             title: "Cloud & DevOps",
@@ -64,7 +64,7 @@ const TechStack = () => {
                 { icon: <SiGithubactions />, name: "Actions" },
                 { icon: <SiSupabase />, name: "Supabase" }
             ],
-            color: "text-orange-500 bg-orange-50"
+            color: "text-kiroku-action bg-kiroku-action/10"
         },
         {
             title: "AI & ML",
@@ -74,15 +74,15 @@ const TechStack = () => {
                 { icon: <SiPytorch />, name: "PyTorch" },
                 { icon: <SiOpenai />, name: "OpenAI" }
             ],
-            color: "text-purple-600 bg-purple-50"
+            color: "text-kiroku-accent bg-kiroku-accent/10"
         }
     ];
 
     return (
-        <section id="tech" ref={sectionRef} className="h-screen bg-pastel-cream overflow-hidden flex flex-col justify-center">
+        <section id="tech" ref={sectionRef} className="h-screen bg-kiroku-background overflow-hidden flex flex-col justify-center">
             <div className="container mx-auto px-6 mb-10 text-center">
-                <h2 className="text-4xl font-bold text-gray-800">Nuestra Tecnología</h2>
-                <p className="text-gray-600 mt-2">Desliza para explorar nuestro stack</p>
+                <h2 className="text-4xl font-bold text-kiroku-contrast">Nuestra Tecnología</h2>
+                <p className="text-kiroku-contrast/70 mt-2">Desliza para explorar nuestro stack</p>
             </div>
 
             <div ref={scrollContainerRef} className="flex px-10 gap-20 w-[400vw]">

@@ -19,34 +19,34 @@ const Services = () => {
             icon: <FaCode />,
             title: "Desarrollo de Software",
             description: "Soluciones personalizadas para tus necesidades únicas. Desde CRMs hasta plataformas complejas.",
-            color: "bg-pastel-peach"
+            color: "bg-kiroku-primary/30 text-kiroku-primary"
         },
         {
             icon: <FaMobileAlt />,
             title: "Apps Móviles y Web",
             description: "Experiencias multiplataforma de excelencia con React Native y tecnologías modernas.",
-            color: "bg-pastel-blue"
+            color: "bg-kiroku-secondary/30 text-kiroku-secondary"
         },
         {
             icon: <FaPalette />,
             title: "Diseño UI/UX",
             description: "Interfaces hermosas e intuitivas que encantan a los usuarios desde el primer clic.",
-            color: "bg-pastel-lavender"
+            color: "bg-kiroku-accent/30 text-kiroku-accent"
         },
         {
             icon: <FaBrain />,
             title: "Integración de IA",
             description: "Potencia tu negocio con soluciones inteligentes utilizando lo último en inteligencia artificial.",
-            color: "bg-pastel-mint"
+            color: "bg-kiroku-action/30 text-kiroku-action"
         }
     ];
 
     return (
-        <section id="services" ref={sectionRef} className="py-24 bg-pastel-cream">
+        <section id="services" ref={sectionRef} className="py-24 bg-kiroku-background/30">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-20">
-                    <h2 className="text-4xl font-bold text-gray-800 mb-4">Nuestros Servicios</h2>
-                    <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                    <h2 className="text-4xl font-bold text-kiroku-contrast mb-4">Nuestros Servicios</h2>
+                    <p className="text-xl text-kiroku-contrast/80 max-w-2xl mx-auto">
                         Convertimos desafíos complejos en soluciones digitales elegantes y eficientes.
                     </p>
                 </div>
@@ -55,15 +55,15 @@ const Services = () => {
                     {services.map((service, idx) => (
                         <div
                             key={idx}
-                            className="service-card bg-white p-10 rounded-3xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-transparent hover:border-gray-100 group"
+                            className="service-card bg-white p-10 rounded-3xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-transparent hover:border-kiroku-primary/20 group"
                         >
-                            <div className={cn("w-16 h-16 rounded-2xl flex items-center justify-center text-3xl text-gray-800 mb-6 transition-transform group-hover:rotate-6", service.color)}>
+                            <div className={cn("w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-6 transition-transform group-hover:rotate-6", service.color)}>
                                 {service.icon}
                             </div>
-                            <h3 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-pastel-coral transition-colors">
+                            <h3 className="text-2xl font-bold text-kiroku-contrast mb-4 group-hover:text-kiroku-primary transition-colors">
                                 {service.title}
                             </h3>
-                            <p className="text-gray-600 leading-relaxed text-lg">
+                            <p className="text-kiroku-contrast/70 leading-relaxed text-lg">
                                 {service.description}
                             </p>
                         </div>

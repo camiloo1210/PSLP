@@ -27,17 +27,17 @@ const Team = () => {
     }, []);
 
     const team = [
-        { name: "José Cerezo", role: "Founder", image: "bg-pastel-peach" },
-        { name: "Camilo Brazales", role: "Founder", image: "bg-pastel-blue" },
-        { name: "Camily Solórzano", role: "Founder", image: "bg-pastel-lavender" },
-        { name: "Ariel Anchapaxi", role: "Founder", image: "bg-pastel-mint" }
+        { name: "José Cerezo", role: "Founder", image: "bg-kiroku-primary" },
+        { name: "Camilo Brazales", role: "Founder", image: "bg-kiroku-secondary" },
+        { name: "Camily Solórzano", role: "Founder", image: "bg-kiroku-accent" },
+        { name: "Ariel Anchapaxi", role: "Founder", image: "bg-kiroku-action" }
     ];
 
     return (
-        <section id="team" ref={sectionRef} className="py-24 bg-pastel-cream">
+        <section id="team" ref={sectionRef} className="py-24 bg-kiroku-background/30">
             <div className="container mx-auto px-6">
-                <h2 className="text-4xl font-bold text-center text-gray-800 mb-4">Nuestro Equipo</h2>
-                <p className="text-center text-gray-600 mb-16 max-w-2xl mx-auto">
+                <h2 className="text-4xl font-bold text-center text-kiroku-contrast mb-4">Nuestro Equipo</h2>
+                <p className="text-center text-kiroku-contrast/70 mb-16 max-w-2xl mx-auto">
                     Mentes creativas apasionadas por construir el futuro digital.
                 </p>
 
@@ -52,13 +52,13 @@ const Team = () => {
                                 </div>
 
                                 <div className="p-6 text-center">
-                                    <h3 className="text-xl font-bold text-gray-800 mb-1">{member.name}</h3>
-                                    <p className="text-pastel-coral font-medium mb-4">{member.role}</p>
+                                    <h3 className="text-xl font-bold text-kiroku-contrast mb-1">{member.name}</h3>
+                                    <p className="text-kiroku-primary font-medium mb-4">{member.role}</p>
 
-                                    <div className="flex justify-center gap-4 text-gray-400">
+                                    <div className="flex justify-center gap-4 text-kiroku-contrast/40">
                                         <a href="#" className="hover:text-blue-500 transition-colors"><FaLinkedin /></a>
                                         <a href="#" className="hover:text-blue-400 transition-colors"><FaTwitter /></a>
-                                        <a href="#" className="hover:text-gray-800 transition-colors"><FaGithub /></a>
+                                        <a href="#" className="hover:text-kiroku-contrast transition-colors"><FaGithub /></a>
                                     </div>
                                 </div>
                             </div>
