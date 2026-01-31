@@ -46,8 +46,7 @@ const OusmaneLanding = () => {
         const element = e.target;
         // Check if scrolled to the end (with small tolerance)
         if (element.scrollLeft + element.clientWidth >= element.scrollWidth - 50) {
-            // Optional: could auto-unlock here, but button is safer UX
-            // setMobileUnlocked(true); 
+            setMobileUnlocked(true);
         }
 
         if (element.scrollLeft > 50) {
@@ -152,7 +151,6 @@ const OusmaneLanding = () => {
                         autoPlay
                         preload="auto"
                         muted
-                        loop={!isMobile}
                         playsInline
                         className="w-full h-full object-cover mask-image-gradient-b"
                     />
@@ -182,8 +180,8 @@ const OusmaneLanding = () => {
                 </div>
 
                 {/* Scroll indicator for mobile */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center md:hidden animate-bounce opacity-50">
-                    <span className="text-xs uppercase tracking-widest mb-2">Descubre</span>
+                <div className="absolute bottom-8 left-0 w-full flex flex-col items-center justify-center md:hidden animate-bounce opacity-50 pointer-events-none">
+                    <span className="text-xs uppercase tracking-widest mb-2 text-center">Descubre</span>
                     <FaChevronRight className="rotate-90 text-xl" />
                 </div>
             </section>
@@ -191,7 +189,7 @@ const OusmaneLanding = () => {
             {/* --- HORIZONTAL SCROLL SECTION --- */}
             <section
                 ref={triggerRef}
-                className="h-screen w-full flex flex-col justify-center bg-white text-[#1a0f1f] relative z-20 overflow-x-auto md:overflow-hidden snap-x snap-mandatory md:snap-none touch-pan-x"
+                className="h-screen w-full flex flex-col justify-center bg-white text-[#1a0f1f] relative z-20 overflow-x-auto md:overflow-hidden snap-x snap-mandatory md:snap-none"
                 onScroll={handleMobileScroll}
             >
                 {/* Visual hint for horizontal scroll on mobile */}
@@ -204,7 +202,7 @@ const OusmaneLanding = () => {
                 <div ref={sliderRef} className="flex h-full w-[400vw] md:w-[400vw]">
 
                     {/* Panel 1: Intro */}
-                    <div className="scroll-panel w-screen h-full flex flex-col justify-center items-center p-6 md:p-12 bg-[#Fce4d6] shrink-0 snap-center relative">
+                    <div className="scroll-panel snap-always w-screen h-full flex flex-col justify-center items-center p-6 md:p-12 bg-[#Fce4d6] shrink-0 snap-center relative">
                         <h2 className="text-[14vw] md:text-[8vw] font-black leading-none mb-8 md:mb-10 text-center">NUESTRO<br />PROCESO</h2>
                         <div className="flex items-center gap-4 text-xl md:text-2xl font-bold opacity-80 animate-pulse">
                             <span className="hidden md:inline">SCROLL</span>
@@ -217,7 +215,7 @@ const OusmaneLanding = () => {
                     </div>
 
                     {/* Panel 2: Design */}
-                    <div className="scroll-panel w-screen h-full flex justify-center items-center p-6 md:p-12 bg-[#1a0f1f] text-[#Fce4d6] shrink-0 snap-center">
+                    <div className="scroll-panel snap-always w-screen h-full flex justify-center items-center p-6 md:p-12 bg-[#1a0f1f] text-[#Fce4d6] shrink-0 snap-center">
                         <div className="max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center w-full">
                             <div className="text-center md:text-left flex flex-col items-center md:items-start">
                                 <FaPaintBrush className="text-5xl md:text-8xl mb-6 md:mb-8 text-[#F970A2]" />
@@ -233,7 +231,7 @@ const OusmaneLanding = () => {
                     </div>
 
                     {/* Panel 3: Develop */}
-                    <div className="scroll-panel w-screen h-full flex justify-center items-center p-6 md:p-12 bg-[#F970A2] text-white shrink-0 snap-center">
+                    <div className="scroll-panel snap-always w-screen h-full flex justify-center items-center p-6 md:p-12 bg-[#F970A2] text-white shrink-0 snap-center">
                         <div className="max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center w-full">
                             <div className="order-2 md:order-1 hidden md:block">
                                 <div className="text-[20rem] font-black opacity-20">02</div>
@@ -252,7 +250,7 @@ const OusmaneLanding = () => {
                     </div>
 
                     {/* Panel 4: Deploy */}
-                    <div className="scroll-panel w-screen h-full flex justify-center items-center p-6 md:p-12 bg-white text-[#1a0f1f] shrink-0 snap-center">
+                    <div className="scroll-panel snap-always w-screen h-full flex justify-center items-center p-6 md:p-12 bg-white text-[#1a0f1f] shrink-0 snap-center">
                         <div className="max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center w-full">
                             <div className="text-center md:text-left flex flex-col items-center md:items-start">
                                 <FaRocket className="text-5xl md:text-8xl mb-6 md:mb-8 text-[#DDA15E]" />
@@ -280,7 +278,7 @@ const OusmaneLanding = () => {
             {/* --- UNLOCKABLE CONTENT WRAPPER --- */}
             <div
                 id="projects-section"
-                className={`transition-all duration-1000 ease-in-out ${mobileUnlocked ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20 h-0 overflow-hidden md:h-auto md:overflow-visible md:opacity-100 md:translate-y-0'}`}
+                className={`transition-all duration-1000 ease-in-out ${mobileUnlocked ? 'opacity-100 translate-y-0' : 'hidden md:block md:opacity-100 md:translate-y-0'}`}
             >
 
                 {/* --- VERTICAL PROJECT LIST --- */}
@@ -332,7 +330,7 @@ const OusmaneLanding = () => {
                     </div>
 
                     <div className="relative z-20 w-full h-full">
-                        <CircularGallery />
+                        {(!isMobile || mobileUnlocked) && <CircularGallery />}
                     </div>
 
                 </section>
