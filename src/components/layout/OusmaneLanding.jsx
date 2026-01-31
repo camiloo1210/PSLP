@@ -4,6 +4,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FaArrowRight, FaCode, FaRocket, FaPaintBrush } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import CircularGallery from '../animations/CircularGallery';
+import LogoLoop from '../animations/LogoLoop';
+import { SiVercel, SiAuth0, SiStripe, SiAmazon, SiShopify, SiAdobe, SiSlack } from 'react-icons/si';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -107,6 +109,16 @@ const OusmaneLanding = () => {
         { id: "03", title: "Ema", cat: "HealthTech / Medical", img: "bg-gradient-to-br from-emerald-500 to-teal-900", link: "/ema", logo: "/ema.svg" },
     ];
 
+    const partnerLogos = [
+        { node: <SiVercel />, title: "Vercel", href: "https://vercel.com" },
+        { node: <SiAuth0 />, title: "Auth0", href: "https://auth0.com" },
+        { node: <SiStripe />, title: "Stripe", href: "https://stripe.com" },
+        { node: <SiAmazon />, title: "AWS", href: "https://aws.amazon.com" },
+        { node: <SiShopify />, title: "Shopify", href: "https://shopify.com" },
+        { node: <SiAdobe />, title: "Adobe", href: "https://adobe.com" },
+        { node: <SiSlack />, title: "Slack", href: "https://slack.com" },
+    ];
+
     return (
         <div ref={componentRef} className="bg-[#1a0f1f] text-[#fce4d6] min-h-screen font-sans selection:bg-[#F970A2] selection:text-white">
 
@@ -116,6 +128,7 @@ const OusmaneLanding = () => {
                         src="video/VideoPulpo.mp4"
                         poster="/poster.png"
                         autoPlay
+                        preload="auto"
                         muted
                         playsInline
                         className="w-full h-full object-cover mask-image-gradient-b"
@@ -265,6 +278,24 @@ const OusmaneLanding = () => {
                     <div className="relative z-20 w-full h-full">
                         <CircularGallery />
                     </div>
+
+                </section>
+
+                {/* --- PARTNERS LOOP SECTION --- */}
+                <section className="py-24 bg-[#1a0f1f] border-t border-white/5 relative z-30">
+                    <div className="container mx-auto px-6 mb-12 text-center">
+                        <p className="text-[#F970A2] font-bold tracking-[0.2em] mb-4 uppercase text-sm">Partners Trust Us</p>
+                        <h2 className="text-3xl md:text-5xl font-bold text-white mb-8">EMPRESAS COLABORADORAS</h2>
+                    </div>
+
+                    <LogoLoop
+                        logos={partnerLogos}
+                        speed={50}
+                        hoverSpeed={0} // Pause on hover
+                        direction="left"
+                        logoHeight={80}
+                        fadeOutColor="#1a0f1f"
+                    />
                 </section>
 
                 {/* --- FOOTER --- */}
