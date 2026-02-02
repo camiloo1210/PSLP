@@ -14,14 +14,17 @@ const OusmaneLanding = () => {
     const componentRef = useRef(null);
     const sliderRef = useRef(null);
     const triggerRef = useRef(null);
+    const mobileUnlockedRef = useRef(false);
     const [mobileUnlocked, setMobileUnlocked] = useState(false);
     const [showHint, setShowHint] = useState(true);
     const [isMobile, setIsMobile] = useState(false);
+    const [heroVisible, setHeroVisible] = useState(true);
 
     // Initial check for desktop to unlock immediately
     useEffect(() => {
         if (window.innerWidth >= 768) {
             setMobileUnlocked(true);
+            mobileUnlockedRef.current = true;
             setIsMobile(false);
         } else {
             setIsMobile(true);
@@ -30,24 +33,57 @@ const OusmaneLanding = () => {
 
     const handleUnlock = () => {
         setMobileUnlocked(true);
+        mobileUnlockedRef.current = true;
+
+        // Allow vertical scrolling again
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+        document.body.style.touchAction = '';
+
         // Smooth scroll to the projects section
-        setTimeout(() => {
-            const projectsSection = document.getElementById('projects-section');
-            if (projectsSection) {
-                projectsSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        }, 100);
+        const projectsSection = document.getElementById('projects-section');
+        if (projectsSection) {
+            projectsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // After scroll animation, hide ONLY the Hero section to lock scroll at top of Horizontal
+        if (isMobile) {
+            setTimeout(() => {
+                setHeroVisible(false);
+                // Since removing the hero shifts content up, we might need to adjust scroll or let browser handle it.
+                // Re-aligning to projects section safely
+                if (projectsSection) {
+                    projectsSection.scrollIntoView({ behavior: 'auto' });
+                }
+            }, 1000);
+        }
     };
+
+
+
+    // Check for re-locking when scrolling back to top
+    useEffect(() => {
+        if (!mobileUnlocked || !isMobile) return;
+
+        const handleScroll = () => {
+            if (window.scrollY < 10) {
+                setMobileUnlocked(false);
+                mobileUnlockedRef.current = false;
+                // setHeroVisible(true); // Don't show hero again, keep it hidden as a ceiling
+                // Optionally reset hint if desired, but user already knows what to do
+                // setShowHint(true); 
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [mobileUnlocked, isMobile]);
 
     const handleMobileScroll = (e) => {
         // Only trigger on mobile
         if (window.innerWidth >= 768) return;
 
         const element = e.target;
-        // Check if scrolled to the end (with small tolerance)
-        if (element.scrollLeft + element.clientWidth >= element.scrollWidth - 50) {
-            setMobileUnlocked(true);
-        }
 
         if (element.scrollLeft > 50) {
             setShowHint(false);
@@ -76,6 +112,7 @@ const OusmaneLanding = () => {
             // 2. Horizontal Scroll Section
             let mm = gsap.matchMedia();
 
+            // DESKTOP: Pin and horizontal scroll
             mm.add("(min-width: 768px)", () => {
                 const panels = gsap.utils.toArray(".scroll-panel");
                 gsap.to(panels, {
@@ -89,6 +126,28 @@ const OusmaneLanding = () => {
                         end: () => "+=" + sliderRef.current.offsetWidth,
                         refreshPriority: 1
                     }
+                });
+            });
+
+            // MOBILE: Lock body scroll when reaching the section
+            mm.add("(max-width: 767px)", () => {
+                ScrollTrigger.create({
+                    trigger: triggerRef.current,
+                    start: "top top",
+                    // Force lock on enter and enterBack (just in case)
+                    onEnter: () => {
+                        if (!mobileUnlockedRef.current) {
+                            document.body.style.overflow = 'hidden';
+                            document.documentElement.style.overflow = 'hidden';
+                            document.body.style.touchAction = 'none'; // Disable touch actions on body just to be sure
+                        }
+                    },
+                    onEnterBack: () => {
+                        if (!mobileUnlockedRef.current) {
+                            document.body.style.overflow = 'hidden';
+                            document.documentElement.style.overflow = 'hidden';
+                        }
+                    },
                 });
             });
 
@@ -143,7 +202,7 @@ const OusmaneLanding = () => {
         <div ref={componentRef} className="bg-[#1a0f1f] text-[#fce4d6] min-h-screen font-sans selection:bg-[#F970A2] selection:text-white overflow-x-hidden">
 
             {/* --- HERO SECTION --- */}
-            <section className="h-[90vh] md:h-screen flex flex-col justify-center px-6 relative overflow-hidden">
+            <section className={`h-[90vh] md:h-screen flex flex-col justify-center px-6 relative overflow-hidden ${!heroVisible ? 'hidden' : ''}`}>
                 <div className="absolute top-0 right-0 h-[60%] md:h-[65%] w-full md:w-[40%] z-0 pointer-events-none">
                     <video
                         src="video/VideoPulpo.mp4"
@@ -189,7 +248,7 @@ const OusmaneLanding = () => {
             {/* --- HORIZONTAL SCROLL SECTION --- */}
             <section
                 ref={triggerRef}
-                className="h-screen w-full flex flex-col justify-center bg-white text-[#1a0f1f] relative z-20 overflow-x-auto md:overflow-hidden snap-x snap-mandatory md:snap-none"
+                className={`h-screen w-full flex flex-col justify-center bg-white text-[#1a0f1f] relative z-20 overflow-x-auto md:overflow-hidden snap-x snap-mandatory md:snap-none ${!mobileUnlocked ? 'touch-pan-x overscroll-y-none' : ''}`}
                 onScroll={handleMobileScroll}
             >
                 {/* Visual hint for horizontal scroll on mobile */}
