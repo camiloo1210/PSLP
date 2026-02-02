@@ -16,7 +16,8 @@ export default {
                 }
             },
             fontFamily: {
-                sans: ['Inter', 'SF Pro Display', 'sans-serif']
+                sans: ['JetBrains Mono', 'monospace'],
+                mono: ['JetBrains Mono', 'monospace']
             },
             animation: {
                 'float': 'float 6s ease-in-out infinite',

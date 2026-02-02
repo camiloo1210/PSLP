@@ -5,9 +5,9 @@ import gsap from 'gsap';
 import {
     SiReact, SiNextdotjs, SiTailwindcss, SiNodedotjs, SiTypescript,
     SiPostgresql, SiMongodb, SiDocker, SiFigma, SiPython,
-    SiJavascript, SiVuedotjs, SiAngular,
+    SiJavascript,
     SiRedis, SiGithubactions, SiSupabase, SiRabbitmq,
-    SiN8N, SiPytorch, SiDotnet, SiCloudflare
+    SiN8N, SiDotnet, SiCloudflare
 } from 'react-icons/si';
 import { FaAws, FaJava } from 'react-icons/fa';
 
@@ -22,8 +22,6 @@ const icons = [
     // Frontend
     { name: "React", Icon: SiReact, color: "#61DAFB" },
     { name: "Next.js", Icon: SiNextdotjs, color: "#ffffff" },
-    { name: "Vue.js", Icon: SiVuedotjs, color: "#4FC08D" },
-    { name: "Angular", Icon: SiAngular, color: "#DD0031" },
     { name: "Tailwind CSS", Icon: SiTailwindcss, color: "#06B6D4" },
 
     // Backend & Database
@@ -44,8 +42,6 @@ const icons = [
     { name: "Cloudflare", Icon: SiCloudflare, color: "#F38020" },
 
     // AI & Machine Learning
-
-    { name: "PyTorch", Icon: SiPytorch, color: "#EE4C2C" },
 ];
 
 const vertex = `
@@ -156,7 +152,7 @@ const CircularGallery = () => {
             return texture;
         };
 
-        const radius = 10; // Radius reduced to 10
+        const radius = 9; // Radius reduced to 10
         const count = icons.length;
         const angleStep = (Math.PI * 2) / count;
         const scale = 2.5; // Scale of the planes
