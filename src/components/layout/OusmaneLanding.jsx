@@ -162,7 +162,7 @@ const OusmaneLanding = () => {
                 </div>
 
                 <div className="container mx-auto z-10 relative mt-20 md:mt-0">
-                    <p className="hero-sub text-[#F970A2] font-bold tracking-[0.2em] mb-4 uppercase text-xs md:text-base">Estudio Digital</p>
+                    <p className="hero-sub text-[#F970A2] font-bold tracking-[0.2em] mb-4 uppercase text-xs md:text-base">Soluciones de Software</p>
                     <h1 className="text-[17vw] md:text-[12vw] leading-[0.85] font-black uppercase tracking-tighter mix-blend-difference text-white">
                         {"KIROKU".split("").map((char, i) => (
                             <span key={i} className="hero-char inline-block">{char}</span>
@@ -361,8 +361,8 @@ const OusmaneLanding = () => {
                     </div>
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 md:gap-0 font-bold mb-12 md:mb-0">
                         <div className="text-xl md:text-xl space-y-2 w-full md:w-auto text-left">
-                            <a href="mailto:hello@kiroku.com" className="block hover:opacity-70 transition-opacity">hello@kiroku.com</a>
-                            <a href="tel:+593991234567" className="block hover:opacity-70 transition-opacity">+593 99 123 4567</a>
+                            <a href="mailto:contact@kirokusolutions.com" className="block hover:opacity-70 transition-opacity">contact@kirokusolutions.com</a>
+                            <a href="tel:+593992698170" className="block hover:opacity-70 transition-opacity">+593 99 269 8170</a>
                             <p className="opacity-60">Quito, Ecuador</p>
                         </div>
                         <div className="text-[22vw] md:text-[15vw] font-black leading-none opacity-20 select-none -ml-2 md:ml-0">

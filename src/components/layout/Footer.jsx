@@ -75,8 +75,8 @@ const Footer = () => {
                     <div>
                         <h3 className="font-bold text-kiroku-contrast mb-4">Contacto</h3>
                         <ul className="space-y-3 text-kiroku-contrast/70">
-                            <li>hello@kiroku.com</li>
-                            <li>+593 99 123 4567</li>
+                            <li>contact@kirokusolutions.com</li>
+                            <li>+593 99 269 8170</li>
                             <li>📍 Quito, Ecuador</li>
                         </ul>
                     </div>
