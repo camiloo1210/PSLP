@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FaArrowRight, FaCode, FaRocket, FaPaintBrush, FaChevronRight } from 'react-icons/fa';
@@ -50,14 +50,21 @@ const OusmaneLanding = () => {
         if (isMobile) {
             setTimeout(() => {
                 setHeroVisible(false);
-                // Since removing the hero shifts content up, we might need to adjust scroll or let browser handle it.
-                // Re-aligning to projects section safely
-                if (projectsSection) {
-                    projectsSection.scrollIntoView({ behavior: 'auto' });
-                }
-            }, 1000);
+                // Scroll adjustment moved to useEffect to ensure it happens AFTER render
+            }, 700);
         }
     };
+
+    // Adjust scroll position when Hero is hidden to prevent jumps
+    useEffect(() => {
+        if (!heroVisible && mobileUnlocked) {
+            const projectsSection = document.getElementById('projects-section');
+            if (projectsSection) {
+                // Immediate snap to maintain visual continuity
+                projectsSection.scrollIntoView({ behavior: 'auto' });
+            }
+        }
+    }, [heroVisible, mobileUnlocked]);
 
 
 
@@ -129,27 +136,8 @@ const OusmaneLanding = () => {
                 });
             });
 
-            // MOBILE: Lock body scroll when reaching the section
-            mm.add("(max-width: 767px)", () => {
-                ScrollTrigger.create({
-                    trigger: triggerRef.current,
-                    start: "top top",
-                    // Force lock on enter and enterBack (just in case)
-                    onEnter: () => {
-                        if (!mobileUnlockedRef.current) {
-                            document.body.style.overflow = 'hidden';
-                            document.documentElement.style.overflow = 'hidden';
-                            document.body.style.touchAction = 'none'; // Disable touch actions on body just to be sure
-                        }
-                    },
-                    onEnterBack: () => {
-                        if (!mobileUnlockedRef.current) {
-                            document.body.style.overflow = 'hidden';
-                            document.documentElement.style.overflow = 'hidden';
-                        }
-                    },
-                });
-            });
+            // MOBILE: No lock needed, rely on natural document flow + hidden projects.
+
 
             // 3. Parallax Images in Vertical Section
             gsap.utils.toArray(".parallax-img").forEach((img) => {
@@ -248,7 +236,7 @@ const OusmaneLanding = () => {
             {/* --- HORIZONTAL SCROLL SECTION --- */}
             <section
                 ref={triggerRef}
-                className={`h-screen w-full flex flex-col justify-center bg-white text-[#1a0f1f] relative z-20 overflow-x-auto md:overflow-hidden snap-x snap-mandatory md:snap-none ${!mobileUnlocked ? 'touch-pan-x overscroll-y-none' : ''}`}
+                className="h-screen w-full flex flex-col justify-center bg-white text-[#1a0f1f] relative z-20 overflow-x-auto md:overflow-hidden snap-x snap-mandatory md:snap-none"
                 onScroll={handleMobileScroll}
             >
                 {/* Visual hint for horizontal scroll on mobile */}
