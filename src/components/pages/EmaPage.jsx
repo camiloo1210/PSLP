@@ -74,7 +74,7 @@ const EmaPage = () => {
             {/* Header / Nav */}
             <nav className="p-4 md:p-8 flex justify-between items-center">
                 <button
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate(-1)}
                     className="flex items-center gap-3 text-lg font-bold hover:text-[#10b981] transition-colors reveal-element"
                 >
                     <FaArrowLeft /> VOLVER
@@ -86,7 +86,7 @@ const EmaPage = () => {
             <header className="container mx-auto px-6 mt-8 mb-16 md:mt-12 md:mb-24">
                 <div className="max-w-4xl">
                     <div className="flex gap-4 mb-6 reveal-element">
-                        <span className="bg-emerald-500/20 text-emerald-400 px-4 py-1 rounded-full text-sm font-bold tracking-wider border border-emerald-500/20">HEALTH TECH</span>
+                        <span className="bg-green-500/20 text-green-400 px-4 py-1 rounded-full text-sm font-bold tracking-wider border border-green-500/20">DESARROLLO ACTIVO</span>
                     </div>
                     <h1 className="text-4xl md:text-8xl font-black uppercase tracking-tighter mb-8 bg-clip-text text-transparent bg-gradient-to-r from-emerald-100 to-emerald-600 reveal-element">
                         Ema

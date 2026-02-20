@@ -12,6 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 const OusmaneLanding = () => {
     const navigate = useNavigate();
     const componentRef = useRef(null);
+    const gluVideoRef = useRef(null);
     const sliderRef = useRef(null);
     const triggerRef = useRef(null);
     const mobileUnlockedRef = useRef(false);
@@ -19,6 +20,27 @@ const OusmaneLanding = () => {
     const [showHint, setShowHint] = useState(true);
     const [isMobile, setIsMobile] = useState(false);
     const [heroVisible, setHeroVisible] = useState(true);
+    const [isAtStart, setIsAtStart] = useState(true);
+
+    // Save scroll position before navigating to a project
+    const navigateToProject = (link) => {
+        sessionStorage.setItem('landing-scroll-y', window.scrollY.toString());
+        navigate(link);
+    };
+
+    // Restore scroll position when returning from a project page
+    useEffect(() => {
+        const savedY = sessionStorage.getItem('landing-scroll-y');
+        if (savedY) {
+            const y = parseInt(savedY, 10);
+            sessionStorage.removeItem('landing-scroll-y');
+            // Delay to let GSAP ScrollTrigger initialize and content render
+            const timer = setTimeout(() => {
+                window.scrollTo(0, y);
+            }, 100);
+            return () => clearTimeout(timer);
+        }
+    }, []);
 
     // Initial check for desktop to unlock immediately
     useEffect(() => {
@@ -31,7 +53,13 @@ const OusmaneLanding = () => {
         }
     }, []);
 
+    // Track touch start for swipe direction detection
+    const touchStartPos = useRef(0);
+    const scrollContainerRef = useRef(null); // Ref specifically for the horizontal scroll container
+    const isAutoScrolling = useRef(false); // Flag to prevent re-lock during auto-scroll
+
     const handleUnlock = () => {
+        isAutoScrolling.current = true; // Set flag before state change
         setMobileUnlocked(true);
         mobileUnlockedRef.current = true;
 
@@ -46,45 +74,59 @@ const OusmaneLanding = () => {
             projectsSection.scrollIntoView({ behavior: 'smooth' });
         }
 
+        // Reset flag after animation duration (approx 1s)
+        setTimeout(() => {
+            isAutoScrolling.current = false;
+        }, 1200);
+
         // After scroll animation, hide ONLY the Hero section to lock scroll at top of Horizontal
         if (isMobile) {
             setTimeout(() => {
                 setHeroVisible(false);
-                // Scroll adjustment moved to useEffect to ensure it happens AFTER render
             }, 700);
         }
     };
 
-    // Adjust scroll position when Hero is hidden to prevent jumps
+    // Re-lock scroll when user scrolls back to the top of projects section
+    // optimization: Use requestAnimationFrame for throttling
+    const lockScrollRaf = useRef(null);
+    const projectsSectionRef = useRef(null);
+
     useEffect(() => {
-        if (!heroVisible && mobileUnlocked) {
-            const projectsSection = document.getElementById('projects-section');
-            if (projectsSection) {
-                // Immediate snap to maintain visual continuity
-                projectsSection.scrollIntoView({ behavior: 'auto' });
-            }
-        }
-    }, [heroVisible, mobileUnlocked]);
+        // Cache the element lookup
+        projectsSectionRef.current = document.getElementById('projects-section');
+    }, [mobileUnlocked]); // Update if structure changes, though it likely won't
 
-
-
-    // Check for re-locking when scrolling back to top
     useEffect(() => {
-        if (!mobileUnlocked || !isMobile) return;
-
         const handleScroll = () => {
-            if (window.scrollY < 10) {
-                setMobileUnlocked(false);
-                mobileUnlockedRef.current = false;
-                // setHeroVisible(true); // Don't show hero again, keep it hidden as a ceiling
-                // Optionally reset hint if desired, but user already knows what to do
-                // setShowHint(true); 
-            }
+            if (!mobileUnlockedRef.current || !isMobile || isAutoScrolling.current) return;
+
+            if (lockScrollRaf.current) return; // Drop frame if already scheduled
+
+            lockScrollRaf.current = requestAnimationFrame(() => {
+                const projectsSection = projectsSectionRef.current || document.getElementById('projects-section');
+
+                if (projectsSection) {
+                    const rect = projectsSection.getBoundingClientRect();
+                    // If the top of the projects section is at or below the viewport top (scrolled up)
+                    // We add a small buffer (e.g., 50px) to ensure user really intends to go up
+                    if (rect.top >= 0) {
+                        // We are back at the transition point. Re-lock.
+                        setMobileUnlocked(false);
+                        mobileUnlockedRef.current = false;
+                    }
+                }
+                lockScrollRaf.current = null;
+            });
         };
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [mobileUnlocked, isMobile]);
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            if (lockScrollRaf.current) cancelAnimationFrame(lockScrollRaf.current);
+        };
+    }, [isMobile]);
+
 
     const handleMobileScroll = (e) => {
         // Only trigger on mobile
@@ -96,6 +138,73 @@ const OusmaneLanding = () => {
             setShowHint(false);
         }
     };
+
+    // Mobile Touch Logic for Scroll Locking
+    useEffect(() => {
+        if (!isMobile) return;
+
+        const container = triggerRef.current; // The horizontal scroll container section reference
+        if (!container) return;
+
+        const handleTouchStart = (e) => {
+            touchStartPos.current = e.touches[0].clientY;
+
+            // Dynamic touch-action to help browser optimize
+            const slideWidth = window.innerWidth;
+            const scrollLeft = container.scrollLeft;
+            const currentSlideIndex = Math.round(scrollLeft / slideWidth);
+
+            if (currentSlideIndex === 0) {
+                container.style.touchAction = 'pan-y pan-x'; // Allow start, JS will filter
+            } else {
+                container.style.touchAction = 'pan-x'; // Browser handles vertical lock
+            }
+        };
+
+        const handleTouchMove = (e) => {
+            if (mobileUnlockedRef.current) return; // Logic does not apply if unlocked
+
+            const touchY = e.touches[0].clientY;
+            const deltaY = touchY - touchStartPos.current; // +ve = Scroll Up (Swipe Down), -ve = Scroll Down (Swipe Up)
+
+            // Determine current slide
+            const slideWidth = window.innerWidth;
+            const scrollLeft = container.scrollLeft;
+            const currentSlideIndex = Math.round(scrollLeft / slideWidth);
+
+            // Logic per slide
+            if (currentSlideIndex === 0) {
+                // Intro Slide:
+                // Allow scrolling UP (swiping down) -> deltaY > 0
+                // Block scrolling DOWN (swiping up) -> deltaY < 0
+                if (deltaY < 0 && e.cancelable) {
+                    e.preventDefault();
+                }
+            } else if (currentSlideIndex === 1 || currentSlideIndex === 2) {
+                // Design & Code Slides:
+                // Block ALL vertical scrolling
+                // Rely on touch-action: pan-x primarily, but keep JS backup
+                if (Math.abs(deltaY) > 5 && e.cancelable) {
+                    e.preventDefault();
+                }
+            } else if (currentSlideIndex === 3) {
+                // Launch Slide:
+                // Block ALL vertical scrolling. Exit only via button.
+                if (Math.abs(deltaY) > 5 && e.cancelable) {
+                    e.preventDefault();
+                }
+            }
+        };
+
+        // Use passive: false to allow preventDefault
+        container.addEventListener('touchstart', handleTouchStart, { passive: false });
+        container.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+        return () => {
+            container.removeEventListener('touchstart', handleTouchStart);
+            container.removeEventListener('touchmove', handleTouchMove);
+        };
+    }, [isMobile]); // Re-run if isMobile changes
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -172,7 +281,7 @@ const OusmaneLanding = () => {
 
     const projects = [
         { id: "01", title: "Fiado", cat: "Fintech / SaaS", img: "bg-gradient-to-br from-blue-600 to-indigo-900", link: "/fiado", logo: "/fiado.svg" },
-        { id: "02", title: "Glu", cat: "Speech AI / Real-time", img: "bg-gradient-to-br from-cyan-600 to-slate-900", link: "/glu", logo: "/glu.svg" },
+        { id: "02", title: "Glu", cat: "Speech AI / Real-time", img: "bg-gradient-to-br from-cyan-600 to-slate-900", link: "/glu", logo: "/glu.svg", video: "/video/GluIntro_cropped.mp4" },
         { id: "03", title: "Ema", cat: "HealthTech / Medical", img: "bg-gradient-to-br from-emerald-500 to-teal-900", link: "/ema", logo: "/ema.svg" },
     ];
 
@@ -236,7 +345,7 @@ const OusmaneLanding = () => {
             {/* --- HORIZONTAL SCROLL SECTION --- */}
             <section
                 ref={triggerRef}
-                className="h-screen w-full flex flex-col justify-center bg-white text-[#1a0f1f] relative z-20 overflow-x-auto md:overflow-hidden snap-x snap-mandatory md:snap-none"
+                className={`h-screen w-full flex flex-col justify-center bg-white text-[#1a0f1f] relative z-20 overflow-x-auto md:overflow-hidden snap-x snap-mandatory md:snap-none ${(!isAtStart && !mobileUnlocked) ? 'touch-pan-x overscroll-y-none' : ''}`}
                 onScroll={handleMobileScroll}
             >
                 {/* Visual hint for horizontal scroll on mobile */}
@@ -337,7 +446,22 @@ const OusmaneLanding = () => {
 
                         <div className="space-y-20 md:space-y-32">
                             {projects.map((project, index) => (
-                                <div key={index} className="reveal-text group flex flex-col md:flex-row items-center gap-8 md:gap-12 relative">
+                                <div
+                                    key={index}
+                                    className="reveal-text group flex flex-col md:flex-row items-center gap-8 md:gap-12 relative"
+                                    onMouseEnter={() => {
+                                        if (project.video && gluVideoRef.current) {
+                                            gluVideoRef.current.currentTime = 0;
+                                            gluVideoRef.current.play();
+                                        }
+                                    }}
+                                    onMouseLeave={() => {
+                                        if (project.video && gluVideoRef.current) {
+                                            gluVideoRef.current.pause();
+                                            gluVideoRef.current.currentTime = 0;
+                                        }
+                                    }}
+                                >
                                     <span className="hidden md:block text-xl font-mono opacity-50">({project.id})</span>
 
                                     {/* Mobile Project Index */}
@@ -345,15 +469,26 @@ const OusmaneLanding = () => {
 
                                     <div className="flex-1 w-full text-center md:text-left z-10">
                                         <h3
-                                            onClick={() => project.link && navigate(project.link)}
+                                            onClick={() => project.link && navigateToProject(project.link)}
                                             className="text-5xl md:text-8xl font-black hover:text-[#F970A2] transition-colors cursor-pointer uppercase tracking-tighter"
                                         >
                                             {project.title}
                                         </h3>
                                         <p className="text-sm md:text-xl mt-4 opacity-60 uppercase tracking-widest font-mono">{project.cat}</p>
                                     </div>
-                                    <div className={`w-full md:w-1/3 aspect-video md:aspect-[4/3] ${project.img} rounded-lg opacity-90 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-105 flex items-center justify-center p-8 shadow-2xl`}>
-                                        {project.logo && <img src={project.logo} alt={`${project.title} logo`} className="w-full h-full object-contain drop-shadow-2xl" />}
+                                    <div className={`w-full md:w-1/3 ${project.video ? 'aspect-square' : 'aspect-video md:aspect-[4/3]'} rounded-lg opacity-90 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-105 overflow-hidden shadow-2xl ${project.video ? 'flex items-center justify-center' : `${project.img} flex items-center justify-center p-8`}`}>
+                                        {project.video ? (
+                                            <video
+                                                ref={gluVideoRef}
+                                                src={project.video}
+                                                muted
+                                                playsInline
+                                                preload="metadata"
+                                                className="w-full h-full object-contain"
+                                            />
+                                        ) : (
+                                            project.logo && <img src={project.logo} alt={`${project.title} logo`} className="w-full h-full object-contain drop-shadow-2xl" />
+                                        )}
                                     </div>
                                 </div>
                             ))}
@@ -406,6 +541,24 @@ const OusmaneLanding = () => {
                             HABLEMOS DE<br />TU PROYECTO
                         </h2>
                     </div>
+
+                    {/* Calendly CTA */}
+                    <div className="flex justify-center my-8 md:my-0">
+                        <button
+                            onClick={() => window.Calendly && window.Calendly.initPopupWidget({ url: 'https://calendly.com/contact-kirokusolutions/30min' })}
+                            className="group relative bg-[#1a0f1f] text-[#fce4d6] px-10 md:px-14 py-5 md:py-6 rounded-full text-sm md:text-lg font-bold uppercase tracking-[0.15em] cursor-pointer
+                                       transition-all duration-300 ease-out
+                                       hover:scale-105 hover:shadow-[0_0_40px_rgba(25,15,31,0.5)]
+                                       active:scale-95"
+                        >
+                            <span className="relative z-10 flex items-center gap-3">
+                                Programe una reunión con nosotros
+                                <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
+                            </span>
+                            <span className="absolute inset-0 rounded-full bg-[#2d1b33] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                        </button>
+                    </div>
+
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 md:gap-0 font-bold mb-12 md:mb-0">
                         <div className="text-xl md:text-xl space-y-2 w-full md:w-auto text-left">
                             <a href="mailto:contact@kirokusolutions.com" className="block hover:opacity-70 transition-opacity">contact@kirokusolutions.com</a>

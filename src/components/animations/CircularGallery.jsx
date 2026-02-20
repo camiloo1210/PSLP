@@ -189,7 +189,6 @@ const CircularGallery = () => {
             mesh.rotation.y += Math.PI;
         });
 
-        // Animation Loop
         let rotationSpeed = 0.0005; // Slower rotation
         let isDragging = false;
         let startX = 0;
@@ -199,7 +198,6 @@ const CircularGallery = () => {
         let currentRotationY = 0;
         let currentRotationX = 0;
         let velocityX = 0; // Velocity for rotation Y (from dragging X)
-        let velocityY = 0; // Velocity for rotation X (from dragging Y) - Optional, or direct mapping? User said "move slightly up or down"
 
         // Interaction
         const onDown = (e) => {
@@ -240,8 +238,13 @@ const CircularGallery = () => {
         container.addEventListener('touchmove', onMove);
         window.addEventListener('touchend', onUp);
 
+        // Animation Loop
         let animationId;
+        let isVisible = true; // Optimization flag
+
         const update = (t) => {
+            if (!isVisible) return; // Stop loop if not visible
+
             animationId = requestAnimationFrame(update);
 
             // Inertia for horizontal rotation
@@ -254,9 +257,6 @@ const CircularGallery = () => {
                     targetRotationY += rotationSpeed; // Constant drift
                 }
 
-                // Return tilt to center slowly when released? Or keep it? 
-                // "move slightly up or down" implies direct control. Let's let it stay or drift back.
-                // Let's drift back to 0 for a nicer "reseting" feel
                 targetRotationX *= 0.95;
             }
 
@@ -276,10 +276,28 @@ const CircularGallery = () => {
 
             renderer.render({ scene, camera });
         };
-        animationId = requestAnimationFrame(update);
+
+        // Optimize: IntersectionObserver to pause animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                isVisible = entry.isIntersecting;
+                if (isVisible) {
+                    if (!animationId) update(performance.now()); // Restart if needed
+                } else {
+                    if (animationId) cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
+            });
+        }, { threshold: 0 });
+
+        observer.observe(container);
+
+        // Start animation
+        update(0);
 
         return () => {
-            cancelAnimationFrame(animationId);
+            observer.disconnect();
+            if (animationId) cancelAnimationFrame(animationId);
             window.removeEventListener('resize', resize);
             container.removeEventListener('mousedown', onDown);
             container.removeEventListener('mousemove', onMove);
