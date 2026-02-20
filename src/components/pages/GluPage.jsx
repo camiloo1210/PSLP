@@ -85,7 +85,7 @@ const GluPage = () => {
                 {/* Header / Nav */}
                 <nav className="p-4 md:p-8 flex justify-between items-center">
                     <button
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate(-1)}
                         className="flex items-center gap-3 text-lg font-bold hover:text-[#00f0ff] transition-colors reveal-element"
                     >
                         <FaArrowLeft /> VOLVER
@@ -97,7 +97,7 @@ const GluPage = () => {
                 <header className="container mx-auto px-6 mt-8 mb-16 md:mt-12 md:mb-24">
                     <div className="max-w-4xl">
                         <div className="flex gap-4 mb-6 reveal-element">
-                            <span className="bg-cyan-500/20 text-cyan-400 px-4 py-1 rounded-full text-sm font-bold tracking-wider border border-cyan-500/20">PRODUCTION READY</span>
+                            <span className="bg-green-500/20 text-green-400 px-4 py-1 rounded-full text-sm font-bold tracking-wider border border-green-500/20">DESARROLLO ACTIVO</span>
                         </div>
                         <h1 className="text-4xl md:text-8xl font-black uppercase tracking-tighter mb-8 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500 reveal-element">
                             Glu

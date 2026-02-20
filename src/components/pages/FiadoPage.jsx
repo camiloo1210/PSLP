@@ -74,7 +74,7 @@ const FiadoPage = () => {
             {/* Header / Nav */}
             <nav className="p-4 md:p-8 flex justify-between items-center">
                 <button
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate(-1)}
                     className="flex items-center gap-3 text-lg font-bold hover:text-[#F970A2] transition-colors reveal-element"
                 >
                     <FaArrowLeft /> VOLVER
